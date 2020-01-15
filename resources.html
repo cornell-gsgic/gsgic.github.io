@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<meta name="robots" content="noindex"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<html>
+  <head>
+    <title>Graduate Students for Gender Inclusion in Computing: Resources</title>
+    <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="title"><a href='.'>Graduate Students for Gender Inclusion in Computing</a></div>
+    <div class='section'>Resources for harassment and bias.</div>
+    <div class='section'><a href='https://docs.google.com/spreadsheets/d/1U2xEdUC7b3OilxAB96YlY6LzKgr8lhM5XCI9Ksd-Hgk'>Add to this list.</a></div>
+    <table id='bigtable'>
+      <thead><tr>
+        <td class='semi-bold first-col'>Resource</td>
+        <td class='semi-bold second-col'>Confidential?</td>
+        <td class='semi-bold'>Description</td>
+      </tr></thead>
+    </table>
+
+    <!--
+      Code for reading from Google Sheets adapted from:
+      https://developers.google.com/sheets/api/quickstart/js
+    -->
+    <script type="text/javascript">
+      // Client ID and API key from the Developer Console
+      var CLIENT_ID = '658661472137-p9qdf9qjg9lkhklcqchlcc5r554uoh6o.apps.googleusercontent.com';
+      var API_KEY = 'AIzaSyAuV2aYIvOO5kgB4ShoUpYtG1OQ-S5jnlE';
+      // Array of API discovery doc URLs for APIs used by the quickstart
+      var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+      // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+      var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
+
+      /**
+       *  On load, called to load the auth2 library and API client library.
+       */
+      function handleClientLoad() {
+        gapi.load('client', initClient);
+      }
+
+      /**
+       *  Initializes the API client library and sets up sign-in state
+       *  listeners.
+       */
+      function initClient() {
+        gapi.client.init({
+          apiKey: API_KEY,
+          clientId: CLIENT_ID,
+          discoveryDocs: DISCOVERY_DOCS,
+          scope: SCOPES
+        }).then(function () {
+          getSheet();
+        });
+      }
+
+      /**
+       * Get data from the resources spreadsheet:
+       * https://docs.google.com/spreadsheets/d/1U2xEdUC7b3OilxAB96YlY6LzKgr8lhM5XCI9Ksd-Hgk
+       */
+      function getSheet() {
+        gapi.client.sheets.spreadsheets.values.get({
+          spreadsheetId: '1U2xEdUC7b3OilxAB96YlY6LzKgr8lhM5XCI9Ksd-Hgk',
+          range: 'Sheet1!A2:E',
+        }).then(function(response) {
+          var range = response.result;
+          if (range.values.length > 0) {
+            for (i = 0; i < range.values.length; i++) {
+              var row = range.values[i];
+              // stop printing the table when a newline is encountered
+              if (row[0] == undefined && row[1] == undefined) { break; }
+              // skip any rows without a name
+              if (row[0] == undefined || row[1] == undefined) { continue; }
+              if (row[0] == '') { continue; }
+              // only include a link if the second column contains a url
+              var name = row[0];
+              var link = row[1];
+              var confidential = row[2];
+              var description = row[3];
+              if (link.substring(0, 4) === 'http') {
+                nameWithLink = "<a href='" + link.split(' ')[0] + "''>" + name + "</a>";
+              } else {
+                nameWithLink = name;
+              }
+              if (confidential == undefined) { confidential = ''; }
+              if (description == undefined) { description = ''; }
+              $('#bigtable').append("<tr><td>" + nameWithLink + "</td><td>" + confidential + "</td><td>" + description + "</td></tr>");
+            }
+          }
+        });
+      }
+
+    </script>
+
+    <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+  </body>
+</html>
