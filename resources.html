@@ -18,7 +18,7 @@
       <thead><tr>
         <td class='semi-bold first-col'>Resource</td>
         <td class='semi-bold second-col'>Confidential?</td>
-        <td class='semi-bold'>Description</td>
+        <td class='semi-bold'>Services offered</td>
       </tr></thead>
     </table>
 
@@ -80,15 +80,15 @@
               var name = row[0];
               var link = row[1];
               var confidential = row[2];
-              var description = row[3];
+              var services = row[4];
               if (link.substring(0, 4) === 'http') {
                 nameWithLink = "<a href='" + link.split(' ')[0] + "''>" + name + "</a>";
               } else {
                 nameWithLink = name;
               }
               if (confidential == undefined) { confidential = ''; }
-              if (description == undefined) { description = ''; }
-              $('#bigtable').append("<tr><td>" + nameWithLink + "</td><td>" + confidential + "</td><td>" + description + "</td></tr>");
+              if (services == undefined) { services = ''; }
+              $('#bigtable').append("<tr><td>" + nameWithLink + "</td><td>" + confidential + "</td><td>" + services + "</td></tr>");
             }
           }
         });
