@@ -37,6 +37,10 @@ body {
 	font-weight: 600;
 }
 
+.meeting-time {
+	font-weight: 600;
+}
+
 a:link {
   color: #e06666;
   text-decoration: none;
