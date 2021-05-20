@@ -65,7 +65,7 @@
       function getSheet() {
         gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '1U2xEdUC7b3OilxAB96YlY6LzKgr8lhM5XCI9Ksd-Hgk',
-          range: 'Sheet1!A2:E',
+          range: 'If You Need Help!A2:E',
         }).then(function(response) {
           var range = response.result;
           if (range.values.length > 0) {
