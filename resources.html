@@ -14,7 +14,18 @@
     <div id="title"><a href='.'>Graduate Students for Gender Inclusion in Computing</a></div>
     <div class='section'>Resources for harassment and bias.</div>
     <div class='section'><a href='https://docs.google.com/spreadsheets/d/1U2xEdUC7b3OilxAB96YlY6LzKgr8lhM5XCI9Ksd-Hgk'>Add to this list.</a></div>
-    <table id='bigtable'>
+    <div class='section'>If you need help:</div>
+    <table id='helptable'>
+      <thead><tr>
+        <td class='semi-bold first-col'>Resource</td>
+        <td class='semi-bold second-col'>Confidential?</td>
+        <td class='semi-bold second-col'>Cornell-specific?</td>
+        <td class='semi-bold'>Description</td>
+        <td class='semi-bold'>Services offered</td>
+      </tr></thead>
+    </table>
+    <div class='section'>If you want to learn:</div>
+    <table id='learntable'>
       <thead><tr>
         <td class='semi-bold first-col'>Resource</td>
         <td class='semi-bold second-col'>Confidential?</td>
@@ -63,9 +74,49 @@
        * https://docs.google.com/spreadsheets/d/1U2xEdUC7b3OilxAB96YlY6LzKgr8lhM5XCI9Ksd-Hgk
        */
       function getSheet() {
+        // Build "If You Need Help" table
         gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '1U2xEdUC7b3OilxAB96YlY6LzKgr8lhM5XCI9Ksd-Hgk',
           range: 'If You Need Help!A2:E',
+        }).then(function(response) {
+          var range = response.result;
+          if (range.values.length > 0) {
+            for (i = 0; i < range.values.length; i++) {
+              var row = range.values[i];
+              // stop printing the table when a newline is encountered
+              if (row[0] == undefined && row[1] == undefined) { break; }
+              // skip any rows without a name
+              if (row[0] == undefined || row[1] == undefined) { continue; }
+              if (row[0] == '') { continue; }
+              // only include a link if the second column contains a url
+              var name = row[0];
+              var link = row[1];
+              var confidential = row[2];
+              var cornell = row[3];
+              var description = row[4];
+              var services = row[5];
+              if (link.substring(0, 4) === 'http') {
+                nameWithLink = "<a href='" + link.split(' ')[0] + "''>" + name + "</a>";
+              } else {
+                nameWithLink = name;
+              }
+              if (confidential == undefined) { confidential = ''; }
+              if (cornell == undefined) { cornell = ''; }
+              if (description == undefined) { description = ''; }
+              if (services == undefined) { services = ''; }
+              $('#helptable').append("<tr><td>"
+                + nameWithLink + "</td><td>"
+                + confidential + "</td><td>"
+                + cornell + "</td><td>"
+                + description + "</td><td>"
+                + services + "</td></tr>");
+            }
+          }
+        });
+        // Build "If You Want To Learn" table
+        gapi.client.sheets.spreadsheets.values.get({
+          spreadsheetId: '1U2xEdUC7b3OilxAB96YlY6LzKgr8lhM5XCI9Ksd-Hgk',
+          range: 'If You Want To Learn!A2:E',
         }).then(function(response) {
           var range = response.result;
           if (range.values.length > 0) {
@@ -88,7 +139,7 @@
               }
               if (confidential == undefined) { confidential = ''; }
               if (services == undefined) { services = ''; }
-              $('#bigtable').append("<tr><td>" + nameWithLink + "</td><td>" + confidential + "</td><td>" + services + "</td></tr>");
+              $('#helptable').append("<tr><td>" + nameWithLink + "</td><td>" + confidential + "</td><td>" + services + "</td></tr>");
             }
           }
         });
