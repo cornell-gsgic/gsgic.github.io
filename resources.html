@@ -28,8 +28,9 @@
     <table id='learntable'>
       <thead><tr>
         <td class='semi-bold first-col'>Resource</td>
-        <td class='semi-bold second-col'>Confidential?</td>
-        <td class='semi-bold'>Services offered</td>
+        <td class='semi-bold second-col'>Cornell-specific?</td>
+        <td class='semi-bold'>Description</td>
+        <td class='semi-bold'>Information</td>
       </tr></thead>
     </table>
 
@@ -77,7 +78,7 @@
         // Build "If You Need Help" table
         gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '1U2xEdUC7b3OilxAB96YlY6LzKgr8lhM5XCI9Ksd-Hgk',
-          range: 'If You Need Help!A2:E',
+          range: 'If You Need Help!A2:F',
         }).then(function(response) {
           var range = response.result;
           if (range.values.length > 0) {
@@ -130,16 +131,22 @@
               // only include a link if the second column contains a url
               var name = row[0];
               var link = row[1];
-              var confidential = row[2];
-              var services = row[4];
+              var cornell = row[2];
+              var description = row[3];
+              var information = row[4];
               if (link.substring(0, 4) === 'http') {
                 nameWithLink = "<a href='" + link.split(' ')[0] + "''>" + name + "</a>";
               } else {
                 nameWithLink = name;
               }
-              if (confidential == undefined) { confidential = ''; }
-              if (services == undefined) { services = ''; }
-              $('#helptable').append("<tr><td>" + nameWithLink + "</td><td>" + confidential + "</td><td>" + services + "</td></tr>");
+              if (cornell == undefined) { cornell = ''; }
+              if (description == undefined) { description = ''; }
+              if (information == undefined) { information = ''; }
+              $('#learntable').append("<tr><td>"
+                + nameWithLink + "</td><td>"
+                + cornell + "</td><td>"
+                + description + "</td><td>"
+                + information + "</td></tr>");
             }
           }
         });
