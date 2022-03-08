@@ -73,7 +73,7 @@ thead {
 	background-color: #fff2cc;
 }
 
-tr:nth-child(2n+3) {
+tr:nth-child(2n+2) {
 	background-color: #fffaeb;
 }
 
