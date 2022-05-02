@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<html>
+  <head>
+  <title>Working Retreat for Gender Inclusion (2022)</title>
+  <meta charset="utf-8"/>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+
+  <body>
+  <div id="title">Welcome!</div>
+  <div class="section">
+    <p>There is no need to prepare anything going into the retreat, though you may want to think about the types of projects you’d be interested to work on. Please bring laptops.  As a reminder, this will be a hybrid event with participants on Zoom and in-person. All members of the graduate community at Cornell are welcome. Everyone is welcome to drop in and out of the retreat as they wish.</p>
+  </div>
+
+  <div id="title">Location</div>
+  <div class="section">
+    <p>Clark Hall Rooms 700 and 701 in the Physical Sciences Building and <a href="https://cornell.zoom.us/j/93433059098?pwd=NE5reXV6K0xmV2wybVNJOExoSTRLUT09">on Zoom</a>.</p>
+  </div>
+
+  <div id="title">Schedule</div>
+  <div class="section">
+    <p>The schedule is available <a href="https://docs.google.com/spreadsheets/d/1XRGDBHWl4YJsankzV6Tnm2LncqQGXqBKJnoTKpX17Y4/edit?usp=sharing">here</a> (The schedule may change a little here and there, but the main structure should stay the same!)</p>
+  </div>
+
+
+  </body>
+</html>
